@@ -2,14 +2,14 @@
 # Create the ctype.
 # Go to admin/config/development/configuration/single/import
 # Select "Migration" from the dropdown. Import (paste) the current file.
-# run "drush mi cars"
+# run "drush migrate:import cars"
 # Keep in mind that each import creates a table in the db. Delete to reimport if you don't want to change the id of the migration.
 
 id: cars
 
 source:
   plugin: csv
-  path: '/var/www/html/drupal-csv-import/public_html/migrations/cars.csv'
+  path: './migrations/cars.csv'
   header_row_count: 1
   keys:
    - id
@@ -32,10 +32,10 @@ source:
 process:
   # ctypeFieldName: csvColumnName
   title: Title
-  field_brand: Brand
-  field_model: Model
-  field_year: Year
-  field_color: Color
+  field_car_brand: Brand
+  field_car_model: Model
+  field_car_year: Year
+  field_car_color: Color
   type:
     plugin: default_value
     default_value: car
