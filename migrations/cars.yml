@@ -1,0 +1,44 @@
+# Install: drush en migrate migrate_tools migrate_source_csv
+# Create the ctype.
+# Go to admin/config/development/configuration/single/import
+# Select "Migration" from the dropdown. Import (paste) the current file.
+# run "drush mi cars"
+# Keep in mind that each import creates a table in the db. Delete to reimport if you don't want to change the id of the migration.
+
+id: cars
+
+source:
+  plugin: csv
+  path: '/var/www/html/drupal-csv-import/public_html/migrations/cars.csv'
+  header_row_count: 1
+  keys:
+   - id
+  column_names:
+    # zeroBasedIndexOfCsvColumnName
+      # csvColumnName: 'Arbitrary string'
+    0:
+      id: 'The id of the entry'
+    1:
+      Title: 'The title of the entry'
+    2:
+      Brand: 'The brand of the entry'
+    3:
+      Model: 'The model of the entry'
+    4:
+      Year: 'The year of the entry'
+    5:
+      Color: 'The color of the entry'
+
+process:
+  # ctypeFieldName: csvColumnName
+  title: Title
+  field_brand: Brand
+  field_model: Model
+  field_year: Year
+  field_color: Color
+  type:
+    plugin: default_value
+    default_value: car
+
+destination:
+  plugin: entity:node
