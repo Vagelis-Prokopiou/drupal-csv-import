@@ -32,7 +32,7 @@ source:
       Color: 'The color of the entry'
 
 process:
-  # ctype field name: csv column name
+  # content type field name: csv column name
   title: Title
   field_car_brand: Brand
   field_car_model: Model
