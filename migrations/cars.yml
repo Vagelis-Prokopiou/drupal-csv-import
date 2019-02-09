@@ -1,11 +1,13 @@
+#https://www.drupal.org/docs/8/api/migrate-api/executing-migrations#importing-migrations
+
 # Install: drush en migrate migrate_tools migrate_source_csv
 # Create the ctype.
 # Go to admin/config/development/configuration/single/import
 # Select "Migration" from the dropdown. Import (paste) the current file.
-# run "drush migrate:import cars"
+# run drush migrate:import --execute-dependencies --all nodes_cars
 # Keep in mind that each import creates a table in the db. Delete to reimport if you don't want to change the id of the migration.
 
-id: cars
+id: nodes_cars
 
 source:
   plugin: csv
@@ -14,8 +16,8 @@ source:
   keys:
    - id
   column_names:
-    # zeroBasedIndexOfCsvColumnName
-      # csvColumnName: 'Arbitrary string'
+    # zero based index of csv column name
+      # csv column name: 'Arbitrary string'
     0:
       id: 'The id of the entry'
     1:
@@ -30,15 +32,19 @@ source:
       Color: 'The color of the entry'
 
 process:
-  # ctypeFieldName: csvColumnName
+  # ctype field name: csv column name
   title: Title
   field_car_brand: Brand
   field_car_model: Model
   field_car_year: Year
-  field_car_color: Color
+  field_car_color/target_id: Color
   type:
     plugin: default_value
     default_value: car
 
 destination:
   plugin: entity:node
+
+migration_dependencies:
+  required:
+    - taxonomy_terms_colors
