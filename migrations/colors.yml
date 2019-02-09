@@ -1,0 +1,35 @@
+# Install: drush en migrate migrate_tools migrate_source_csv
+# Create the ctype.
+# Go to admin/config/development/configuration/single/import
+# Select "Migration" from the dropdown. Import (paste) the current file.
+# run "drush migrate:import taxonomy_terms_colors"
+# Keep in mind that each import creates a table in the db. Delete to reimport if you don't want to change the id of the migration.
+
+id: taxonomy_terms_colors
+
+source:
+  plugin: csv
+  path: './migrations/colors.csv'
+  header_row_count: 1
+  keys:
+   - id
+  column_names:    
+    0:
+      id: 'Unique id of the entry'
+    1:
+      name: 'The name of the entry'
+    2:
+      description: 'The description of the entry'
+    3:
+      path: 'The path of the entry'
+process:
+  name: name
+  description: description
+  path: path
+  type:
+    plugin: default_value
+    default_value: color
+
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: colors
